@@ -2,19 +2,18 @@
 
 {% load static %}
 
-{% block content %}
+{% block content%}
 
 <br>
-
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
-            <h5>Past Issues</h5>
+            <h5>Past Episodes</h5>
 
             <table class="table table-sm">
-                {% for issue in issues %}
+                {% for episode in episodes %}
                     <tr>
-                        <td><a class="btn btn-sm btn-info" href="{% url 'issue' issue.pk %}">{{ issue.title }}</a></td>
+                        <td><a class="btn btn-sm btn-info" href="{% url 'episode' episode.pk %}">{{ episode.title }}</a></td>
                     </tr>
                 {% endfor %}
             </table>
