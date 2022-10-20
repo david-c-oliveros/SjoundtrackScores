@@ -1,0 +1,25 @@
+{% extends 'newsletter/main.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-body">
+
+            <form action="" method="POST">
+                {% csrf_token %}
+
+                {{ issue_form | crispy }}
+                {{ summary_form | crispy }}
+
+                <button type="submit">Publish Issue</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

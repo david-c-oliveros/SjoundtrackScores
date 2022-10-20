@@ -3,29 +3,40 @@ from django.db import models
 # Create your models here.
 
 
-class Issue(models.Model):
+class Summary(models.Model):
+    intro = models.TextField(blank=True)
+    body = models.TextField(blank=True)
+
+
+class FirstImpressions(models.Model):
+    first_title = models.CharField(max_length=200, null=True)
+    first_desc = models.CharField(max_length=200, null=True)
+    first_body = models.TextField(blank=True)
+
+    second_title = models.CharField(max_length=200, null=True)
+    second_desc = models.CharField(max_length=200, null=True)
+    second_body = models.TextField(blank=True)
+
+    third_title = models.CharField(max_length=200, null=True)
+    third_desc = models.CharField(max_length=200, null=True)
+    third_body = models.TextField(blank=True)
+
+
+class NeverGetsOld(models.Model):
     title = models.CharField(max_length=200, null=True)
+    desc = models.CharField(max_length=200, null=True)
+    body = models.TextField(blank=True)
 
-    first_impressions_robert_title = models.CharField(max_length=200, null=True)
-    first_impressions_robert_desc = models.CharField(max_length=200, null=True)
-    first_impressions_robert_body = models.TextField(blank=True)
 
-    first_impressions_stephen_title = models.CharField(max_length=200, null=True)
-    first_impressions_stephen_desc = models.CharField(max_length=200, null=True)
-    first_impressions_stephen_body = models.TextField(blank=True)
+class ComposerSpotlight(models.Model):
+    title = models.CharField(max_length=200, null=True)
+    desc = models.CharField(max_length=200, null=True)
+    body = models.TextField(blank=True)
 
-    first_impressions_michael_title = models.CharField(max_length=200, null=True)
-    first_impressions_michael_desc = models.CharField(max_length=200, null=True)
-    first_impressions_michael_body = models.TextField(blank=True)
 
-    never_gets_old_title = models.CharField(max_length=200, null=True)
-    never_gets_old_desc = models.CharField(max_length=200, null=True)
-    never_gets_old_body = models.TextField(blank=True)
-
-    composer_spotlight_title = models.CharField(max_length=200, null=True)
-    composer_spotlight_desc = models.CharField(max_length=200, null=True)
-    composer_spotlight_body = models.TextField(blank=True)
-
+class Episode(models.Model):
+    title = models.CharField(max_length=200, null=True)
+    link = models.CharField(max_length=200, null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
 
@@ -33,9 +44,14 @@ class Issue(models.Model):
         return self.title
 
 
-class Episode(models.Model):
+class Issue(models.Model):
     title = models.CharField(max_length=200, null=True)
-    link = models.CharField(max_length=200, null=True)
+
+    summary = models.ForeignKey(Summary, null=True, on_delete=models.SET_NULL)
+    first_impressions = models.ForeignKey(FirstImpressions, null=True, on_delete=models.SET_NULL)
+    never_gets_old = models.ForeignKey(NeverGetsOld, null=True, on_delete=models.SET_NULL)
+    composer_spotlight = models.ForeignKey(ComposerSpotlight, null=True, on_delete=models.SET_NULL)
+
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
 

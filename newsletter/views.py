@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
 
 from .models import *
+from .forms import *
 
 # Create your views here.
 
@@ -23,6 +25,22 @@ def issue(request, pk):
     context = { 'issue': issue }
 
     return render(request, 'newsletter/issue.html', context)
+
+
+def createIssue(request):
+    issue_form = IssueForm()
+    summary_form = SummaryForm()
+
+    if request.method == 'POST':
+        issue_form = IssueForm(request.POST)
+        summary_form = SummaryForm(request.POST)
+        if issue_form.is_valid() and summary_form.is_valid():
+            issue_form.save()
+            summary_form.save()
+            return redirect('/')
+
+    context = { 'issue_form': issue_form, 'summary_form': summary_form }
+    return render(request, 'newsletter/issue_form.html', context)
 
 
 def podcast(request):

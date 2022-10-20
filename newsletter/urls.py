@@ -7,5 +7,6 @@ urlpatterns = [
     path('newsletter', views.newsletter, name="newsletter"),
     path('podcast', views.podcast, name="podcast"),
     path('issue/<str:pk>/', views.issue, name="issue"),
-    path('episode/<str:pk>/', views.episode, name="episode")
+    path('episode/<str:pk>/', views.episode, name="episode"),
+    path('create_issue/', views.createIssue, name="create_issue"),
 ]
