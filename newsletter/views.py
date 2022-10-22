@@ -21,25 +21,29 @@ def newsletter(request):
 
 def issue(request, pk):
     issue = Issue.objects.get(id=pk)
+    elements = issue.elements.all()
+    print(elements[0].content)
 
-    context = { 'issue': issue }
+    context = { 'issue': issue, 'elements': elements }
 
     return render(request, 'newsletter/issue.html', context)
 
 
 def createIssue(request):
-    issue_form = IssueForm()
-    summary_form = SummaryForm()
+    issue = Issue()
+    element_form = ElementForm()
 
     if request.method == 'POST':
-        issue_form = IssueForm(request.POST)
-        summary_form = SummaryForm(request.POST)
-        if issue_form.is_valid() and summary_form.is_valid():
-            issue_form.save()
-            summary_form.save()
+        element_form = ElementForm(request.POST)
+
+        if element_form.is_valid():
+            issue.save()
+            element_form.issue_id = issue.id
+            element_form.save()
             return redirect('/')
 
-    context = { 'issue_form': issue_form, 'summary_form': summary_form }
+    context = { 'element_form': element_form }
+
     return render(request, 'newsletter/issue_form.html', context)
 
 

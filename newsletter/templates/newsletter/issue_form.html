@@ -13,8 +13,8 @@
             <form action="" method="POST">
                 {% csrf_token %}
 
-                {{ issue_form | crispy }}
-                {{ summary_form | crispy }}
+                <h4>New Element</h4>
+                {{ element_form | crispy }}
 
                 <button type="submit">Publish Issue</button>
             </form>

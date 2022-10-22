@@ -14,7 +14,7 @@
             <table class="table table-sm">
                 {% for issue in issues %}
                     <tr>
-                        <td><a class="btn btn-sm btn-info" href="{% url 'issue' issue.pk %}">{{ issue.title }}</a></td>
+                        <td><a class="btn btn-sm btn-info" href="{% url 'issue' issue.pk %}">New Issue</a></td>
                     </tr>
                 {% endfor %}
             </table>

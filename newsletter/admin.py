@@ -1,8 +1,9 @@
 from django.contrib import admin
 
-from .models import Issue, Episode
+from .models import *
 
 # Register your models here.
 
 admin.site.register(Issue)
+admin.site.register(Element)
 admin.site.register(Episode)

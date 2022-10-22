@@ -4,45 +4,10 @@
 
 {% block content %}
 
-<h3>{{ issue.title }}</h3>
+<h5>First Impressions</h5>
 
-<b>{{ issue.first_impressions_robert_title }}</b>
-<br>
-<br>
-<p>{{ issue.first_impressions_robert_desc }}</p>
-<br>
-<p>{{ issue.first_impressions_robert_body }}</p>
-<br>
-
-<b>{{ issue.first_impressions_stephen_title }}</b>
-<br>
-<br>
-<p>{{ issue.first_impressions_stephen_desc }}</p>
-<br>
-<p>{{ issue.first_impressions_stephen_body }}</p>
-<br>
-
-<b>{{ issue.first_impressions_michael_title }}</b>
-<br>
-<br>
-<p>{{ issue.first_impressions_michael_desc }}</p>
-<br>
-<p>{{ issue.first_impressions_michael_body }}</p>
-<br>
-
-<b>{{ issue.never_gets_old_title }}</b>
-<br>
-<br>
-<p>{{ issue.never_gets_old_desc }}</p>
-<br>
-<p>{{ issue.never_gets_old_body }}</p>
-<br>
-
-<b>{{ issue.composer_spotlight_title }}</b>
-<br>
-<br>
-<p>{{ issue.composer_spotlight_desc }}</p>
-<br>
-<p>{{ issue.composer_spotlight_body }}</p>
+{% for element in elements %}
+    <p>{{ element.content }}</p>
+{% endfor %}
 
 {% endblock %}
