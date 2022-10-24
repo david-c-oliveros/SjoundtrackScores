@@ -14,11 +14,12 @@ def home(request):
 def newsletter(request):
     issues = Issue.objects.all()
     element_sets = []
+    issue_contents = []
 
     for i in range(len(issues)):
-        element_sets.append(issues[i].elements.all())
+        issue_contents.append([issues[i], issues[i].elements.all()])
 
-    context = { 'issues': issues, 'element_sets': element_sets }
+    context = { 'issues': issue_contents }
 
     return render(request, 'newsletter/newsletter.html', context)
 

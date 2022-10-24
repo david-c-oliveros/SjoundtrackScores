@@ -12,9 +12,10 @@
             <h5>Past Issues</h5>
 
             <table class="table table-sm">
-                {% for i in range(issues.length()) %}
+                {% for issue in issues %}
                     <tr>
-                        <td><a class="btn btn-sm btn-info" href="{% url 'issue' issue.pk %}">Issue</a></td>
+                        <p>{{ i }}</p>
+                        <td><a class="btn btn-sm btn-info" href="{% url 'issue' issue.0.id %}">{{ issue.1.0.content }}</a></td>
                     </tr>
                 {% endfor %}
             </table>
