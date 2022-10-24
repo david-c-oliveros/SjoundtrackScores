@@ -22,7 +22,7 @@ def newsletter(request):
 def issue(request, pk):
     issue = Issue.objects.get(id=pk)
     elements = issue.elements.all()
-    print(elements[0].content)
+    print(elements)
 
     context = { 'issue': issue, 'elements': elements }
 
@@ -30,15 +30,16 @@ def issue(request, pk):
 
 
 def createIssue(request):
-    issue = Issue()
     element_form = ElementForm()
 
     if request.method == 'POST':
         element_form = ElementForm(request.POST)
 
         if element_form.is_valid():
+            issue = Issue()
             issue.save()
-            element_form.issue_id = issue.id
+            element = element_form.save(commit=False)
+            element.issue = issue
             element_form.save()
             return redirect('/')
 
