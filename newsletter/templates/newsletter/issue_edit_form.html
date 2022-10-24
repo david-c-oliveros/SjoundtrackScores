@@ -1,0 +1,29 @@
+{% extends 'newsletter/main.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-body">
+
+            <form action="" method="POST">
+                {% csrf_token %}
+
+                {% for element in elements %}
+                    <p>{{ element.content }}</p>
+                {% endfor %}
+
+                {{ element_form | crispy }}
+
+                <button class="btn btn-sm btn-info" type="submit">Add</button>
+                <a class="btn btn-sm btn-info" href="{% url 'issue' issue.pk %}">Finish</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

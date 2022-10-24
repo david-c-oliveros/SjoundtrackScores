@@ -13,8 +13,12 @@ def home(request):
 
 def newsletter(request):
     issues = Issue.objects.all()
+    element_sets = []
 
-    context = { 'issues': issues }
+    for i in range(len(issues)):
+        element_sets.append(issues[i].elements.all())
+
+    context = { 'issues': issues, 'element_sets': element_sets }
 
     return render(request, 'newsletter/newsletter.html', context)
 
@@ -22,7 +26,6 @@ def newsletter(request):
 def issue(request, pk):
     issue = Issue.objects.get(id=pk)
     elements = issue.elements.all()
-    print(elements)
 
     context = { 'issue': issue, 'elements': elements }
 
@@ -30,22 +33,32 @@ def issue(request, pk):
 
 
 def createIssue(request):
+
+    issue = Issue()
+    issue.save()
+    return redirect(f'/edit_issue/{ issue.id }')
+
+
+def editIssue(request, pk):
+    issue = Issue.objects.get(id=pk)
+    elements = issue.elements.all()
     element_form = ElementForm()
 
     if request.method == 'POST':
         element_form = ElementForm(request.POST)
 
-        if element_form.is_valid():
-            issue = Issue()
-            issue.save()
-            element = element_form.save(commit=False)
-            element.issue = issue
-            element_form.save()
-            return redirect('/')
+    if element_form.is_valid():
+        print('valid')
+        element = element_form.save(commit=False)
+        element.issue = issue
+        element_form.save()
+        print('redirecting')
+        return redirect(f'/edit_issue/{ pk }')
 
-    context = { 'element_form': element_form }
+    context = { 'issue': issue, 'element_form': element_form, 'elements': elements }
 
-    return render(request, 'newsletter/issue_form.html', context)
+    return render(request, 'newsletter/issue_edit_form.html', context)
+
 
 
 def podcast(request):

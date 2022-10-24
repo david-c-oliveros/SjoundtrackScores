@@ -6,15 +6,15 @@
 
 <br>
 
-<div class="row">
-    <div class="col-md">
-        <div class="card card-body">
+<div class="row bg-secondary">
+    <div class="col-md bg-secondary">
+        <div class="card card-body bg-secondary">
             <h5>Past Issues</h5>
 
             <table class="table table-sm">
-                {% for issue in issues %}
+                {% for i in range(issues.length()) %}
                     <tr>
-                        <td><a class="btn btn-sm btn-info" href="{% url 'issue' issue.pk %}">New Issue</a></td>
+                        <td><a class="btn btn-sm btn-info" href="{% url 'issue' issue.pk %}">Issue</a></td>
                     </tr>
                 {% endfor %}
             </table>

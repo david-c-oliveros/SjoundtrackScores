@@ -4,10 +4,11 @@
 
 {% block content %}
 
-<h5>First Impressions</h5>
-
 {% for element in elements %}
     <p>{{ element.content }}</p>
 {% endfor %}
+
+<a class="btn btn-sm btn-info" href="{% url 'edit_issue' issue.id %}">Edit Issue</a>
+
 
 {% endblock %}
