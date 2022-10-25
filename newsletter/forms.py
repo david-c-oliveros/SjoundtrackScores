@@ -11,4 +11,4 @@ class IssueForm(ModelForm):
 class ElementForm(ModelForm):
     class Meta:
         model = Element
-        fields = ['content']
+        fields = ['content', 'image']

@@ -10,8 +10,9 @@ class Issue(models.Model):
 
 
 class Element(models.Model):
-    issue = models.ForeignKey(Issue, related_name='elements', null=True, on_delete=models.SET_NULL)
+    issue = models.ForeignKey(Issue, related_name='elements', null=True, on_delete=models.CASCADE)
     content = models.TextField(null=True)
+    image = models.ImageField(null=True, blank=True)
 
 
 class Episode(models.Model):

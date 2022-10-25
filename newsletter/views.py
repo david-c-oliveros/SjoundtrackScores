@@ -49,7 +49,6 @@ def editIssue(request, pk):
         element_form = ElementForm(request.POST)
 
     if element_form.is_valid():
-        print('valid')
         element = element_form.save(commit=False)
         element.issue = issue
         element_form.save()
@@ -59,6 +58,18 @@ def editIssue(request, pk):
     context = { 'issue': issue, 'element_form': element_form, 'elements': elements }
 
     return render(request, 'newsletter/issue_edit_form.html', context)
+
+
+def deleteIssue(request, pk):
+    issue = Issue.objects.get(id=pk)
+
+    if request.method == "POST":
+        issue.delete()
+        return redirect('/newsletter')
+
+    context = { 'issue': issue }
+
+    return render(request, 'newsletter/issue_delete.html', context)
 
 
 
