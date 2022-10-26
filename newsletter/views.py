@@ -46,13 +46,12 @@ def editIssue(request, pk):
     element_form = ElementForm()
 
     if request.method == 'POST':
-        element_form = ElementForm(request.POST)
+        element_form = ElementForm(request.POST, request.FILES)
 
     if element_form.is_valid():
         element = element_form.save(commit=False)
         element.issue = issue
         element_form.save()
-        print('redirecting')
         return redirect(f'/edit_issue/{ pk }')
 
     context = { 'issue': issue, 'element_form': element_form, 'elements': elements }

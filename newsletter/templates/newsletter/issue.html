@@ -9,7 +9,7 @@
     <div class="col-sm-6">
         {% for element in elements %}
             <div class="card card-body bg-secondary">
-                <p class="test">{{ element.content }}</p>
+                <p class="test">{{ element.text }}</p>
                 {% if element.image.url != None %}
                     <h3>Image Here</h3>
                     <img src="{{ element.image.url }}">

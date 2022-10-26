@@ -10,11 +10,11 @@
     <div class="col-md-6">
         <div class="card card-body">
 
-            <form action="" method="POST">
+            <form action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
 
                 {% for element in elements %}
-                    <p>{{ element.content }}</p>
+                    <p>{{ element.text }}</p>
                 {% endfor %}
 
                 {{ element_form | crispy }}
