@@ -7,6 +7,7 @@
 {% block content %}
 
 <div class="row">
+    <div class="col-sm-3"></div>
     <div class="col-md-6">
         <div class="card card-body">
 
@@ -14,7 +15,19 @@
                 {% csrf_token %}
 
                 {% for element in elements %}
-                    <p>{{ element.text }}</p>
+                    <div class="card card-body bg-secondary">
+
+                        <p class="test">{{ element.text }}</p>
+
+                        {% if element.image.url != None %}
+                            <img src="{{ element.image.url }}">
+                        {% endif %}
+
+                        {% if element.link_name != None and element.link_url != None %}
+                            <a href="{{ element.link_url }}">{{ element.link_name }}</a>
+                        {% endif %}
+
+                    </div>
                 {% endfor %}
 
                 {{ element_form | crispy }}
@@ -24,6 +37,7 @@
             </form>
         </div>
     </div>
+    <div class="col-sm-3"></div>
 </div>
 
 {% endblock %}

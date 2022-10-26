@@ -10,9 +10,11 @@ class Issue(models.Model):
 
 
 class Element(models.Model):
-    issue = models.ForeignKey(Issue, related_name='elements', null=True, on_delete=models.CASCADE)
-    text = models.TextField(null=True)
+    issue = models.ForeignKey(Issue, related_name='elements', null=True, blank=True, on_delete=models.CASCADE)
+    text = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
+    link_name = models.CharField(max_length=200, null=True, blank=True)
+    link_url = models.CharField(max_length=200, null=True, blank=True)
 
 
 class Episode(models.Model):
