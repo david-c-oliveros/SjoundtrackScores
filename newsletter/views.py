@@ -8,12 +8,16 @@ from .forms import *
 
 
 def home(request):
-    return render(request, 'newsletter/dashboard.html')
+    latest_issue = Issue.objects.latest('id')
+    latest_issue_elements = latest_issue.elements.all().order_by('id')[:10]
+
+    context = { 'latest_issue_elements': latest_issue_elements }
+
+    return render(request, 'newsletter/dashboard.html', context)
 
 
 def newsletter(request):
     issues = Issue.objects.all()
-    element_sets = []
     issue_contents = []
 
     for i in range(len(issues)):
