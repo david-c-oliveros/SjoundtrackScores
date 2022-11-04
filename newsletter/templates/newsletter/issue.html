@@ -4,28 +4,29 @@
 
 {% block content %}
 
-<div class="row bg-secondary">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-4">
-        <div class="card card-body bg-secondary">
+<div class="container">
+    <div class="row bg-secondary">
+        <div class="col-0 col-md-1 col-lg-2"></div>
+        <div class="col-12 col-md-10 col-lg-8">
+            <div class="card card-body">
 
-            {% for element in elements %}
+                {% for element in elements %}
 
-                    <p class="test">{{ element.text }}</p>
+                        <p class="test">{{ element.text }}</p>
 
-                    {% if element.image.url != None %}
-                        <img src="{{ element.image.url }}">
-                    {% endif %}
+                        {% if element.image.url != None %}
+                            <img src="{{ element.image.url }}">
+                        {% endif %}
 
-                    {% if element.link_name != None and element.link_url != None %}
-                        <a href="{{ element.link_url }}">{{ element.link_name }}</a>
-                    {% endif %}
+                        {% if element.link_name != None and element.link_url != None %}
+                            <a href="{{ element.link_url }}">{{ element.link_name }}</a>
+                        {% endif %}
 
-            {% endfor %}
+                {% endfor %}
 
+            </div>
         </div>
     </div>
-    <div class="col-sm-4"></div>
 </div>
 
 <a class="btn btn-sm btn-info" href="{% url 'edit_issue' issue.id %}">Edit Issue</a>

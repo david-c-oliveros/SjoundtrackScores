@@ -11,4 +11,8 @@ urlpatterns = [
     path('create_issue/', views.createIssue, name="create_issue"),
     path('edit_issue/<str:pk>/', views.editIssue, name="edit_issue"),
     path('delete_issue/<str:pk>/', views.deleteIssue, name="delete_issue"),
+
+    path('register', views.registerPage, name="register"),
+    path('login', views.loginPage, name="login"),
+    path('logout', views.logoutUser, name="logout"),
 ]

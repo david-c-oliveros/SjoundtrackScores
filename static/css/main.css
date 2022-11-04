@@ -1,2 +1,11 @@
 body {
 }
+
+@media (max-width: 575.98px) {
+    .test {
+        background-color: green;
+    }
+}
+
+.test {
+}

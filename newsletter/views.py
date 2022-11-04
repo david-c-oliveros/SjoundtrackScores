@@ -1,10 +1,74 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+
+from django.contrib import messages
+
 from .models import *
 from .forms import *
 
+
 # Create your views here.
+
+
+def registerPage(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+
+    else:
+        form = CreateUserForm()
+
+        if request.method == 'POST':
+            form = CreateUserForm(request.POST)
+
+            if form.is_valid():
+                form.save()
+                user = form .cleaned_data.get('username')
+                messages.success(request, 'Account was created for ' + user)
+
+                return redirect('login')
+
+        context = { 'form': form }
+        return render(request, 'newsletter/register.html', context)
+
+
+def loginPage(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+
+    else:
+        form = AuthenticationForm()
+
+        if request.method == 'POST':
+            form = AuthenticationForm(request, data=request.POST)
+
+            if form.is_valid():
+                username = form.cleaned_data.get('username')
+                password = form.cleaned_data.get('password')
+
+                user = authenticate(username=username, password=password)
+
+                if user is not None:
+                    login(request, user)
+                    messages.info(request, f"You are now logged in as { username }.")
+                    return redirect("home")
+
+                else:
+                    messages.error(request, "Invalid username or password.")
+
+            else:
+                messages.error(request, "Invalid username or password.")
+
+        context = { 'form': form}
+        return render(request, 'newsletter/login.html', context)
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
 
 
 def home(request):
@@ -37,6 +101,7 @@ def issue(request, pk):
     return render(request, 'newsletter/issue.html', context)
 
 
+@login_required(login_url='home')
 def createIssue(request):
 
     issue = Issue()
@@ -44,6 +109,7 @@ def createIssue(request):
     return redirect(f'/edit_issue/{ issue.id }')
 
 
+@login_required(login_url='home')
 def editIssue(request, pk):
     issue = Issue.objects.get(id=pk)
     elements = issue.elements.all()
@@ -63,6 +129,7 @@ def editIssue(request, pk):
     return render(request, 'newsletter/issue_edit_form.html', context)
 
 
+@login_required(login_url='home')
 def deleteIssue(request, pk):
     issue = Issue.objects.get(id=pk)
 

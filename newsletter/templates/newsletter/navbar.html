@@ -1,5 +1,13 @@
 {% load static %}
 
+<style>
+    .hello-msg {
+        font-size: 18px;
+        color: #fff;
+        margin-right: 20px;
+    }
+</style>
+
 <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
     <a class="navbar-brand" href="{% url 'home' %}">Soundtrack Scores</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,4 +26,8 @@
             </li>
         </ul>
     </div>
+
+    <span class="hello-msg">Hello, {{ request.user }}</span>
+    <span><a href="{% url 'logout' %}">Logout</a></span>
+
 </nav>
