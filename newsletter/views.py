@@ -9,68 +9,64 @@ from django.contrib import messages
 
 from .models import *
 from .forms import *
+from .decorators import unauthenticated_user, allowed_users
 
 
 # Create your views here.
 
 
+@unauthenticated_user
 def registerPage(request):
-    if request.user.is_authenticated:
-        return redirect('home')
+    form = CreateUserForm()
 
-    else:
-        form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
 
-        if request.method == 'POST':
-            form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = form .cleaned_data.get('username')
+            messages.success(request, 'Account was created for ' + user)
 
-            if form.is_valid():
-                form.save()
-                user = form .cleaned_data.get('username')
-                messages.success(request, 'Account was created for ' + user)
+            return redirect('login')
 
-                return redirect('login')
-
-        context = { 'form': form }
-        return render(request, 'newsletter/register.html', context)
+    context = { 'form': form }
+    return render(request, 'newsletter/register.html', context)
 
 
+@unauthenticated_user
 def loginPage(request):
-    if request.user.is_authenticated:
-        return redirect('home')
+    form = AuthenticationForm()
 
-    else:
-        form = AuthenticationForm()
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
 
-        if request.method == 'POST':
-            form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
 
-            if form.is_valid():
-                username = form.cleaned_data.get('username')
-                password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
 
-                user = authenticate(username=username, password=password)
-
-                if user is not None:
-                    login(request, user)
-                    messages.info(request, f"You are now logged in as { username }.")
-                    return redirect("home")
-
-                else:
-                    messages.error(request, "Invalid username or password.")
+            if user is not None:
+                login(request, user)
+                messages.info(request, f"You are now logged in as { username }.")
+                return redirect("home")
 
             else:
                 messages.error(request, "Invalid username or password.")
 
-        context = { 'form': form}
-        return render(request, 'newsletter/login.html', context)
+        else:
+            messages.error(request, "Invalid username or password.")
+
+    context = { 'form': form}
+    return render(request, 'newsletter/login.html', context)
 
 
 def logoutUser(request):
     logout(request)
     return redirect('login')
 
-
+#@login_required(login_url='login')
+@allowed_users(allowed_roles=[ 'admin', 'guest' ])
 def home(request):
     latest_issue = Issue.objects.latest('id')
     latest_issue_elements = latest_issue.elements.all().order_by('id')[:10]
@@ -78,6 +74,11 @@ def home(request):
     context = { 'latest_issue_elements': latest_issue_elements }
 
     return render(request, 'newsletter/dashboard.html', context)
+
+
+def userPage(request):
+    context = {}
+    return render(request, 'newsletter/user.html', context)
 
 
 def newsletter(request):
