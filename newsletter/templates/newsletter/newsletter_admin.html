@@ -12,10 +12,16 @@
             <h5>Past Issues</h5>
 
             <table class="table table-sm">
+                <tr>
+                    <td>
+                        <a class="btn btn-sm btn-info" href="{% url 'create_issue' %}">Create New Issue</a>
+                    </td>
+                </tr>
                 {% for issue in issues %}
                     <tr>
                         <td>
-                            <a class="btn btn-sm btn-info" href="{% url 'issue' issue.0.id %}">{{ issue.1.0.text }}</a>
+                            <a class="btn btn-sm btn-info" href="{% url 'issue_admin' issue.0.id %}">{{ issue.1.0.text }}</a>
+                            <a class="btn btn-sm btn-danger" href="{% url 'delete_issue' issue.0.id %}">Delete Issue</a>
                         </td>
                     </tr>
                 {% endfor %}

@@ -65,8 +65,6 @@ def logoutUser(request):
     logout(request)
     return redirect('login')
 
-#@login_required(login_url='login')
-@allowed_users(allowed_roles=[ 'admin', 'guest' ])
 def home(request):
     latest_issue = Issue.objects.latest('id')
     latest_issue_elements = latest_issue.elements.all().order_by('id')[:10]
@@ -81,6 +79,19 @@ def userPage(request):
     return render(request, 'newsletter/user.html', context)
 
 
+@allowed_users(allowed_roles=['admin'])
+def newsletterAdmin(request):
+    issues = Issue.objects.all()
+    issue_contents = []
+
+    for i in range(len(issues)):
+        issue_contents.append([issues[i], issues[i].elements.all()])
+
+    context = { 'issues': issue_contents }
+
+    return render(request, 'newsletter/newsletter_admin.html', context)
+
+
 def newsletter(request):
     issues = Issue.objects.all()
     issue_contents = []
@@ -93,6 +104,16 @@ def newsletter(request):
     return render(request, 'newsletter/newsletter.html', context)
 
 
+@allowed_users(allowed_roles=['admin'])
+def issueAdmin(request, pk):
+    issue = Issue.objects.get(id=pk)
+    elements = issue.elements.all()
+
+    context = { 'issue': issue, 'elements': elements }
+
+    return render(request, 'newsletter/issue_admin.html', context)
+
+
 def issue(request, pk):
     issue = Issue.objects.get(id=pk)
     elements = issue.elements.all()
@@ -103,6 +124,7 @@ def issue(request, pk):
 
 
 @login_required(login_url='home')
+@allowed_users(allowed_roles=['admin'])
 def createIssue(request):
 
     issue = Issue()
@@ -111,6 +133,7 @@ def createIssue(request):
 
 
 @login_required(login_url='home')
+@allowed_users(allowed_roles=['admin'])
 def editIssue(request, pk):
     issue = Issue.objects.get(id=pk)
     elements = issue.elements.all()
@@ -131,6 +154,7 @@ def editIssue(request, pk):
 
 
 @login_required(login_url='home')
+@allowed_users(allowed_roles=['admin'])
 def deleteIssue(request, pk):
     issue = Issue.objects.get(id=pk)
 
