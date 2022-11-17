@@ -79,19 +79,6 @@ def userPage(request):
     return render(request, 'newsletter/user.html', context)
 
 
-@allowed_users(allowed_roles=['admin'])
-def newsletterAdmin(request):
-    issues = Issue.objects.all()
-    issue_contents = []
-
-    for i in range(len(issues)):
-        issue_contents.append([issues[i], issues[i].elements.all()])
-
-    context = { 'issues': issue_contents }
-
-    return render(request, 'newsletter/newsletter_admin.html', context)
-
-
 def newsletter(request):
     issues = Issue.objects.all()
     issue_contents = []

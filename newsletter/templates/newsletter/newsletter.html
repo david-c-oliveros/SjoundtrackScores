@@ -12,10 +12,22 @@
             <h5>Past Issues</h5>
 
             <table class="table table-sm">
+                {% if request.user.is_authenticated %}
+                    <tr>
+                        <td>
+                            <a class="btn btn-sm btn-info" href="{% url 'create_issue' %}">Create New Issue</a>
+                        </td>
+                    </tr>
+                {% endif %}
+
                 {% for issue in issues %}
                     <tr>
                         <td>
                             <a class="btn btn-sm btn-info" href="{% url 'issue' issue.0.id %}">{{ issue.1.0.text }}</a>
+                            {% if request.user.is_authenticated %}
+                                <a class="btn btn-sm btn-info" href="{% url 'edit_issue' issue.0.id %}">Edit Issue</a>
+                                <a class="btn btn-sm btn-danger" href="{% url 'delete_issue' issue.0.id %}">Delete Issue</a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
