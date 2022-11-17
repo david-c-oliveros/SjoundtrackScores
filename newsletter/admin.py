@@ -7,3 +7,4 @@ from .models import *
 admin.site.register(Issue)
 admin.site.register(Element)
 admin.site.register(Episode)
+admin.site.register(Video)

@@ -2,6 +2,8 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
+from embed_video.fields import EmbedVideoField
+
 # Create your models here.
 
 
@@ -25,3 +27,16 @@ class Episode(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Video(models.Model):
+    episode = models.ForeignKey(Episode, related_name='videos', null=True, blank=True, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    added = models.DateTimeField(auto_now_add=True)
+    url = EmbedVideoField()
+
+    def __str__(self):
+        return str(self.title)
+
+    class Meta:
+        ordering = [ '-added' ]

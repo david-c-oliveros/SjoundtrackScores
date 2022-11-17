@@ -1,9 +1,17 @@
 {% extends 'newsletter/main.html' %}
+{% load embed_video_tags %}
 
 {% load static %}
 
 {% block content %}
 
-<h3><a href="{{ episode.link }}">{{ episode.title }}</a></h3>
+{% for video in videos %}
+
+<div class="card card-body bg-secondary">
+    {% video video.url '426x240' %}
+    {{ video.title }}
+</div>
+
+{% endfor %}
 
 {% endblock %}

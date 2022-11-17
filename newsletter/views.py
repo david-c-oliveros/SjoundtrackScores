@@ -165,7 +165,8 @@ def podcast(request):
 
 def episode(request, pk):
     episode = Episode.objects.get(id=pk)
+    videos = episode.videos.all()
 
-    context = { 'episode': episode }
+    context = { 'episode': episode, 'videos': videos }
 
     return render(request, 'newsletter/episode.html', context)
