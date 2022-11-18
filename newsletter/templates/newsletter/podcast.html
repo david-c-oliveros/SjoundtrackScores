@@ -1,4 +1,5 @@
 {% extends 'newsletter/main.html' %}
+{% load embed_video_tags %}
 
 {% load static %}
 
@@ -13,7 +14,13 @@
             <table class="table table-sm">
                 {% for episode in episodes %}
                     <tr>
-                        <td><a class="btn btn-sm btn-info" href="{% url 'episode' episode.pk %}">{{ episode.title }}</a></td>
+                        <td><a class="btn btn-sm btn-info" href="{% url 'episode' episode.0.id %}">{{ episode.0.title }}</a></td>
+                    </tr>
+                    <tr>
+                        <div class="card card-body bg-secondary">
+                            {% video episode.1.0.url '426x240' %}
+                            {{ episode.1.0.title }}
+                        </div>
                     </tr>
                 {% endfor %}
             </table>

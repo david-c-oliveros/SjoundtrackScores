@@ -91,16 +91,6 @@ def newsletter(request):
     return render(request, 'newsletter/newsletter.html', context)
 
 
-@allowed_users(allowed_roles=['admin'])
-def issueAdmin(request, pk):
-    issue = Issue.objects.get(id=pk)
-    elements = issue.elements.all()
-
-    context = { 'issue': issue, 'elements': elements }
-
-    return render(request, 'newsletter/issue_admin.html', context)
-
-
 def issue(request, pk):
     issue = Issue.objects.get(id=pk)
     elements = issue.elements.all()
@@ -157,8 +147,12 @@ def deleteIssue(request, pk):
 
 def podcast(request):
     episodes = Episode.objects.all()
+    episode_videos = []
 
-    context = { 'episodes': episodes }
+    for i in range(len(episodes)):
+        episode_videos.append([episodes[i], episodes[i].videos.all()])
+
+    context = { 'episodes': episode_videos }
 
     return render(request, 'newsletter/podcast.html', context)
 
