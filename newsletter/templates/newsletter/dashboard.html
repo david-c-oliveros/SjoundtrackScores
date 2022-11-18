@@ -11,7 +11,7 @@
         <div class="col-0 col-md-1 col-lg-2"></div>
         <div class="col-12 col-md-10 col-lg-8">
             <h3>Latest Issue</h3>
-            <div class="card card-body">
+            <a href="{% url 'issue' latest_issue.id %}" class="card card-body">
 
                 {% for element in latest_issue_elements %}
                     <p> {{ element.text }}</p>
@@ -26,7 +26,7 @@
 
                 {% endfor %}
 
-            </div>
+            </a>
         </div>
     </div>
 </div>

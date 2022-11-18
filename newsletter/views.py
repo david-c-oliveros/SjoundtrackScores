@@ -69,7 +69,7 @@ def home(request):
     latest_issue = Issue.objects.latest('id')
     latest_issue_elements = latest_issue.elements.all().order_by('id')[:10]
 
-    context = { 'latest_issue_elements': latest_issue_elements }
+    context = { 'latest_issue': latest_issue, 'latest_issue_elements': latest_issue_elements }
 
     return render(request, 'newsletter/dashboard.html', context)
 
